@@ -26,12 +26,15 @@ def index():
 @app.route("/products/<int:product_id>")
 def product_detail(product_id):
     product = dao.get_product_by_id(product_id)
-    comments = dao.get_comment(product_id=product_id,page=int(request.args.get('page',1)))
+    page = int(request.args.get('page',1))
+    comments = dao.get_comment(product_id=product_id,page=int(page))
 
     num = dao.count_comment(product_id=product_id)
     page_size = app.config['COMMENT_SIZE']
 
-    return render_template('product_detail.html',comments=comments, product=product,pages=math.ceil(num/page_size))
+    return render_template('product_detail.html',comments=comments,
+                           product=product,
+                           pages=math.ceil(num/page_size))
 
 @app.route('/admin/login', methods=['post'])
 def login_admin():

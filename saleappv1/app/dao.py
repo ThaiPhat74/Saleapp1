@@ -36,8 +36,7 @@ def get_comment(product_id,page):
     page = int(page)
     page_size = app.config['COMMENT_SIZE']
     start = (page - 1) * page_size
-    return Comment.query.filter(Comment.product_id.__eq__(product_id)).order_by(-Comment.id).slice(start,
-                                                                                                   start + page_size).all()
+    return Comment.query.filter(Comment.product_id.__eq__(product_id)).order_by(-Comment.id).slice(start,start + page_size).all()
 
 def count_comment(product_id):
     return Comment.query.filter(Comment.product_id.__eq__(product_id)).count()
